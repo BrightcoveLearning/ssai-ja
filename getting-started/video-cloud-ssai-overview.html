@@ -1,0 +1,741 @@
+﻿<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="このトピックでは、動的配信のために取り込まれた動画で Brightcove のサーバー側広告挿入（SSAI）を使用する方法について説明します。">
+  
+  <title>ビデオクラウド SSAI の概要</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">  
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-ultra.eot" type="font/eot">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-ultra.woff" type="font/woff">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-super.eot" type="font/eot">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-super.woff" type="font/woff">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-black.eot" type="font/eot">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-black.woff" type="font/woff">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-bold.eot" type="font/eot">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-bold.woff" type="font/woff">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-medium.eot" type="font/eot">
+  <link data-react-helmet="true" rel="preload" as="font" href="https://files.brightcove.com/fonts/balto/baltoweb-medium.woff" type="font/woff">
+  <link data-react-helmet="true" rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://support.brightcove.com/site-assets/css/site/prism.css">
+  <link rel="stylesheet" href="https://support.brightcove.com/site-assets/css/site/styles.css">
+  <link rel="stylesheet" href="https://support.brightcove.com/site-assets/css/site/landing-page.css">
+  <link rel="stylesheet" href="https://support.brightcove.com/site-assets/css/site/tabs.css">
+  <link rel="stylesheet" href="/assets/css/local.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/381443caa8.js" crossorigin="anonymous"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/google-analytics.js"></script>
+  <script src="/assets/js/sajari-head.js"></script>
+</head>
+
+<body class="body">
+
+<header>
+  <div class="div-header">
+    <a href="/"><span class="product-logo" style="font-family:'Balto Web','Public Sans';font-size:2em;font-weight:bold;">ブライトコーブ SSAI <sup>™</sup></span></a>
+<!-- GTranslate: https://gtranslate.io/ -->
+<select onchange="doGTranslate(this);"><option value="">言語の選択</option><option value="en|en" translate="No">English</option><option value="en|zh-TW" translate="No">繁體中文</option><option value="en|fr" translate="No">Français</option><option value="en|de" translate="No">Deutsche</option><option value="en|ja" translate="No">日本語</option><option value="en|ko" translate="No">한국어</option><option value="en|es" translate="No">Español</option></select>
+
+<script>
+/* <![CDATA[ */
+function doGTranslate(lang_pair) {if(lang_pair.value)lang_pair=lang_pair.value;if(lang_pair=='')return;var lang=lang_pair.split('|')[1];var plang=location.hostname.split('.')[0];if(plang.length !=2 && plang.toLowerCase() != 'zh-cn' && plang.toLowerCase() != 'zh-tw')plang='en';location.href=location.protocol+'//'+(lang == 'en' ? '' : lang+'.')+location.hostname.replace('www.', '').replace(RegExp('^' + plang + '\\.'), '')+location.pathname+location.search;}
+/* ]]> */
+</script>
+
+    <select id="site_select" class="bcls-select" style="margin-right: 1rem;">
+      <option value="">ブライトコーブのその他のドキュメント</option>
+      
+        
+          <option value="https://support.brightcove.com">ドキュメントホーム</option>
+        
+      
+        
+          <option value="https://audience.support.brightcove.com">Brightcove Audience</option>
+        
+      
+        
+          <option value="https://beacon.support.brightcove.com">ブライトコーブビーコン</option>
+        
+      
+        
+          <option value="https://campaign.support.brightcove.com">ブライトコーブキャンペーン</option>
+        
+      
+        
+          <option value="https://engage.support.brightcove.com">Brightcove Engage</option>
+        
+      
+        
+          <option value="https://live.support.brightcove.com">Brightcove Live</option>
+        
+      
+        
+          <option value="https://gallery.support.brightcove.com">Brightcove Gallery</option>
+        
+      
+        
+          <option value="https://ssai.support.brightcove.com">Brightcove SSAI</option>
+        
+      
+        
+          <option value="https://social.support.brightcove.com">ブライトコーブソーシャル</option>
+        
+      
+        
+          <option value="https://studio.support.brightcove.com">Video Cloud Studio</option>
+        
+      
+        
+          <option value="https://player.support.brightcove.com">ブライトコーブのプレーヤー開発</option>
+        
+      
+        
+          <option value="https://apis.support.brightcove.com">Video CloudプラットフォームAPI</option>
+        
+      
+        
+          <option value="https://sdks.support.brightcove.com">ビデオクラウドデバイス SDK</option>
+        
+      
+        
+          <option value="https://integrations.support.brightcove.com">統合および CMS コネクタ</option>
+        
+      
+        
+          <option value="https://general.support.brightcove.com">ビデオクラウドの一般情報</option>
+        
+      
+        
+          <option value="https://zencoder.support.brightcove.com">Zencoder</option>
+        
+      
+    </select>
+
+
+    <span class="secondary-nav"><a href="https://supportportal.brightcove.com/s/login/?"><img src="https://support.brightcove.com/site-assets/images/site/support.png" alt="サポート"/> サポートへのお問い合わせ</a> <span style="vertical-align: top;margin-left:1em;margin-right:1em;">|</span> <a href="https://status.brightcove.com/"><img src="https://support.brightcove.com/site-assets/images/site/status.png" alt="システムステータス"/> システムステータス</a></span> <br/>
+    
+  </div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb arr-right">
+      
+      <li class="breadcrumb-item"><a href="/">ホーム</a></li>
+      
+      
+      
+      <li class="breadcrumb-item"><a href="/getting-started/">新しいVideo Cloud Studioの基礎</a></li>
+      
+      <li class="breadcrumb-item active" aria-current="page">ビデオクラウド SSAI の概要</li>
+    </ol>
+  </nav>
+</header>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-3 left-side-bar">
+        <nav class="sidenav" id="side_nav">
+          
+            
+            <h5><a href="/index.html">ホーム</a></h5>
+            
+          
+            
+              <h5 class="submenu-header"><a href="/getting-started/index.html">はじめに<strong> + </strong></a></h5>
+              <ul class="sidenav-submenu" style="display:none;">
+                
+                  
+                    <li><a href="/getting-started/video-cloud-ssai-overview.html">SSAI の概要</a></li>
+                  
+                
+                  
+                    <li><a href="https://studio.support.brightcove.com/admin/configuring-server-side-ad-settings.html">サーバーサイド広告設定の構成</a></li>
+                  
+                
+              </ul>
+            
+          
+            
+              <h5 class="submenu-header"><a href="/vod/guides/index.html">ビデオオンデマンドガイド<strong> + </strong></a></h5>
+              <ul class="sidenav-submenu" style="display:none;">
+                
+                  
+                    <li><a href="https://player.support.brightcove.com/plugins/implementing-server-side-ads-brightcove-player.html">ブライトコーブプレーヤーで SSAI を実装する</a></li>
+                  
+                
+                  
+                    <li><a href="https://sdks.support.brightcove.com/features/implementing-server-side-ads-native-player-sdks.html">ネイティブ SDK で SSAI を実装する</a></li>
+                  
+                
+                  
+                    <li><a href="/vod/guides/ssai-ad-block-detection-and-auto-failover.html">SSAI:広告ブロックの検出と自動フェールオーバー</a></li>
+                  
+                
+                  
+                    <li><a href="/vod/guides/video-cloud-ssai-ad-config-api.html">ビデオクラウド SSAI 広告設定 API </a></li>
+                  
+                
+                  
+                    <li><a href="/vod/guides/ad-error-beacons-ssai.html">SSAI での広告エラービーコン</a></li>
+                  
+                
+              </ul>
+            
+          
+            
+              <h5 class="submenu-header"><a href="/vod/references/index.html">ビデオオンデマンドリファレンス<strong> + </strong></a></h5>
+              <ul class="sidenav-submenu" style="display:none;">
+                
+                  
+                    <li><a href="/vod/references/reference.html">SSAI API リファレンス</a></li>
+                  
+                
+                  
+                    <li><a href="/vod/references/ssai-api-error-reference.html">SSAI API エラーリファレンス</a></li>
+                  
+                
+                  
+                    <li><a href="https://player.support.brightcove.com/plugins/changelog/server-side-ads-plugin-changelog.html">サーバーサイド広告プラグインの更新履歴</a></li>
+                  
+                
+              </ul>
+            
+          
+            
+              <h5 class="submenu-header"><a href="/live/guides/index.html">ライブガイド<strong> + </strong></a></h5>
+              <ul class="sidenav-submenu" style="display:none;">
+                
+                  
+                    <li><a href="https://live.support.brightcove.com/live-module/implementing-server-side-ads-live-module.html">ライブモジュールでのSSAIの実装</a></li>
+                  
+                
+                  
+                    <li><a href="https://live.support.brightcove.com/live-api/ssai/live-api-server-side-ad-insertion-ssai.html">ブライトコーブライブ API:サーバー側広告挿入 (SSAI) </a></li>
+                  
+                
+                  
+                    <li><a href="https://live.support.brightcove.com/live-api/ssai/live-api-cue-points-and-ad-beacons-ssai.html">ライブ API:SSAI を使用したキューポイントと広告ビーコン</a></li>
+                  
+                
+                  
+                    <li><a href="https://player.support.brightcove.com/advertising/client-side-preroll-with-live-ssai.html">ライブ SSAI を使用したクライアント側のプリロール広告</a></li>
+                  
+                
+                  
+                    <li><a href="/live/guides/overview-player-enhancements-live-ssai.html">概要:ライブ SSAI のプレーヤーの機能強化</a></li>
+                  
+                
+                  
+                    <li><a href="/live/guides/implementing-player-enhancements-live-ssai.html">ライブ SSAI のプレーヤー機能拡張の実装</a></li>
+                  
+                
+              </ul>
+            
+          
+            
+              <h5 class="submenu-header"><a href="/live/references/index.html">ライブ参照<strong> + </strong></a></h5>
+              <ul class="sidenav-submenu" style="display:none;">
+                
+                  
+                    <li><a href="/live/references/reference.html">ライブ API リファレンス</a></li>
+                  
+                
+                  
+                    <li><a href="https://live.support.brightcove.com/live-api/references/live-api-error-messages.html">ライブ API:エラーメッセージ</a></li>
+                  
+                
+                  
+                    <li><a href="https://live.support.brightcove.com/release-notes/live-api-release-notes.html">ライブ API リリースノート</a></li>
+                  
+                
+              </ul>
+            
+          
+            
+              <h5 class="submenu-header"><a href="/support/index.html">開発者サポート<strong> + </strong></a></h5>
+              <ul class="sidenav-submenu" style="display:none;">
+                
+                  
+                    <li><a href="/support/brightcove-answer.html">ブライトコーブの回答</a></li>
+                  
+                
+                  
+                    <li><a href="/support/viewing-brightcove-system-status-page.html">ブライトコーブのシステムステータスページの表示</a></li>
+                  
+                
+                  
+                    <li><a href="/support/contact-sales.html">営業へのお問い合わせ</a></li>
+                  
+                
+                  
+                    <li><a href="/support/opening-case-with-brightcove-support.html">サポートケースを開く</a></li>
+                  
+                
+              </ul>
+            
+          
+      </nav>
+    </div>
+    <div class="col-lg-7" style="background-color: white;color: #333333;margin-top: -1em;margin-bottom: -1em;padding-bottom:1em;">
+  <!-- bootstrap layout -->
+
+<p id="bc_veggie_burger_wrapper" style="display: none;"><img id="bc_veggie_burger" src="/assets/images/feather/menu.svg" alt="ナビゲーションメニュー"/></p>
+
+<!-- search bar -->
+<div id="nav-search-box" style="margin-top: 1rem;"></div>
+<!-- in-page navigation for narrow screens -->
+<details class="centered-inpage-nav" id="centered_inpage_nav">
+  <summary><h6 class="toc">ページコンテンツ</h6></summary>
+  <nav id="centered_toc"></nav>
+  <ul id="centered_in_page_toc" class="list-none"></ul>
+</details>
+<!-- open in new tab/window -->
+<a id="open_new_tab" href="#" target="_blank" style="display: none;"><img src="/assets/images/feather/external-link.svg" alt="新しいタブで開く" style="margin-top:4em;width: 1.5em;"/></a>
+
+
+
+  
+    
+
+
+<h1>ビデオクラウド SSAI の概要</h1>
+<article class="bcls-article">
+  <summary>このトピックでは、動的配信のために取り込まれた動画で Brightcove のサーバー側広告挿入（SSAI）を使用する方法について説明します。</summary>
+
+<article class="bcls-article">
+<section class="bcls-section">
+<h2 id="Overview">概要</h2>
+
+<p>ビデオを再生できるデバイスの数は毎日拡大します。OTT接続されたデバイスは、特に、急速なペースで従来のテレビを置き換え続けています。この環境では、すべてのデバイスプラットフォームと広告サーバーまたはネットワーク用にクライアントプレーヤーの統合を構築するには、コストと時間がかかります。場合によっては、特定のプラットフォーム用のクライアントプレーヤーを構築することはまったく現実的ではありません。</p>
+
+<p>Brightcove SSAI は、広告をサポートする動画をこれらのデバイスに簡単に配信できます。デバイスごとにコストのかかる統合を構築し、維持する必要はありません。Brightcove SSAI は広告を動画コンテンツストリームに縫い付けます。ストリーミング動画を再生できるあらゆるデバイスで、セッションごとの広告ターゲティング、クライアント側のビーコン、視認性レポート、人気の広告サービスとの互換性など、業界をリードする Video Cloud オンライン動画内で動作します。プラットフォーム。</p>
+
+<aside class="bcls-aside bcls-aside--information">
+<p>注</p>
+
+<ul>
+	<li>SSAI を使用するには、Video Cloud <a href="https://studio.support.brightcove.com/general/overview-dynamic-delivery.html">アカウントをダイナミック配信に設定し</a>、SSAI を有効にする必要があります。この機能の使用を開始するには、アカウントマネージャーにお問い合わせください。</li>
+	<li>SSAI はビデオオンデマンド (VOD) で動作し、ライブ再生をサポートしています。</li>
+	<li>制限のリストについては、<a href="#Limitations">次のセクションを参照してください</a>。</li>
+</ul>
+</aside>
+
+<h3>プロセスフロー</h3>
+
+<p>SSAIがない場合、ブラウザに広告ブロッカーがあると、VAST、VMAP、Vペイドを使用するIMA、FreeWheelなどのクライアント側の広告は再生されません。</p>
+
+<p>広告ブロック検出を有効にしたSSAIと自動フェイルオーバー機能を有効にすると、広告は常に配信されます。</p>
+
+<ul>
+	<li>
+	<p>広告ブロッカーがない場合は、クライアント側の広告が再生されます。</p>
+	</li>
+	<li>
+	<p>広告ブロッカーが検出されると、サーバーサイド広告が再生されます。</p>
+	</li>
+</ul>
+
+<p>SSAI で自動フェイルオーバーを有効にしない場合、サーバー側広告のみが再生されます。</p>
+</section>
+
+<section class="bcls-section">
+<h2 id="Why_SSAI">なぜSSAI？</h2>
+
+<p>SSAI の利点は次のとおりです。</p>
+
+<ul>
+	<li><strong>スムーズでテレビのようなユーザーエクスペリエンス</strong> -クライアントサイド広告のスピナー、エラー、フリーズなしで、エンゲージメントを高めます。普通のテレビのように、それはちょうど再生されます！</li>
+	<li><strong>マルチスクリーンリーチ</strong> -広告対応のVODでOTT接続デバイスにリーチしたいですか？動画視聴の急成長セグメントに動画をプッシュし、収益化も簡単に行えます。SSAI は動画を再生できるあらゆるデバイスで動作します。ブライトコーブプレーヤーは任意です！</li>
+	<li><strong>広告ブロッキング損失の回復</strong> -広告ブロッカーに損失した10～ 30% の収益を直ちに回復します。クライアント側の広告のようにSSAIをブロックすることはできません。</li>
+	<li><strong>セッションごとのターゲティング</strong> -動画メタデータタグ、デバイス情報、ユーザーID、アプリケーション固有のパラメーターを各広告呼び出しに渡して、個々の広告ターゲティングを有効にして、在庫に対するCPM率が最高になります。</li>
+</ul>
+
+<p>ブライトコーブプレーヤーの SSAI では、次の追加機能を提供します（VOD のみ）。</p>
+
+<ul>
+	<li><strong>クライアント側のビーコン</strong> -サードパーティ分析ライブラリとの統合を含む、クライアントからのインプレッション、エンゲージメント、視認性をレポートします。</li>
+	<li><strong>広告シークを無効にする</strong> -広告中断の高速転送を無効にします。</li>
+	<li><strong>広告のクリックスルー-ユーザーは広告中にクリックスルーで詳細を知ることができます</strong>。</li>
+	<li><strong>コンパニオンオーバーレイ</strong> -リニア動画広告には、コンパニオンオーバーレイ画像を表示できます。</li>
+</ul>
+</section>
+
+<section class="bcls-section">
+<h2 id="Client_platforms">クライアントプラットフォーム</h2>
+
+<p>ブライトコーブ SSAI では、広告対応の動画を OTT デバイスに簡単に配信できます。</p>
+
+<aside class="bcls-aside bcls-aside--information">
+<p>ウェブ用 Brightcove Player および動的配信 API は、多くのカスタム OTT インテグレーションにも使用できますが、<strong>これらの統合は、ブライトコーブグローバルサービス（BGS）とのコンサルティングによる取り決め以外にはサポートされません</strong>。</p>
+デバイス固有の統合ロジックを除外した簡単な例で問題を実証できる場合は、API インタラクションまたは Web プレーヤーの機能に関する質問が解決されます。</aside>
+
+<p>次の表に、さまざまな OTT の例の再生統合タイプを示します。</p>
+
+<table class="bcls-table">
+	<thead class="bcls-table__head">
+		<tr>
+			<th>デバイス</th>
+			<th>サポートされていますか？</th>
+			<th>BGSの統合は利用可能ですか？</th>
+			<th>統合タイプ</th>
+			<th>注</th>
+		</tr>
+	</thead>
+	<tbody class="bcls-table__body">
+		<tr>
+			<td>Apple TV</td>
+			<td>はい</td>
+			<td>はい</td>
+			<td>iOS 用ブライトコーブネイティブ SDK <sup><a href="#n1"> [1] </a></sup></td>
+			<td>tvOS 12.4.1+</td>
+		</tr>
+		<tr>
+			<td>Android TV</td>
+			<td>はい</td>
+			<td>はい</td>
+			<td>Android 用ブライトコーブネイティブ SDK <sup><a href="#n1"> [1] </a></sup></td>
+			<td>アンドロイド 6.0+</td>
+		</tr>
+		<tr>
+			<td>ファイヤーテレビ</td>
+			<td>はい</td>
+			<td>はい</td>
+			<td>Android 用ブライトコーブネイティブ SDK <sup><a href="#n1"> [1] </a></sup></td>
+			<td>FireOS 5.0+</td>
+		</tr>
+		<tr>
+			<td>NVIDIA プレーヤー、NVIDIA シールド</td>
+			<td>はい</td>
+			<td>はい</td>
+			<td>Android 用ブライトコーブネイティブ SDK <sup><a href="#n1"> [1] </a></sup></td>
+			<td>アンドロイドテレビを実行する</td>
+		</tr>
+		<tr>
+			<td>Roku</td>
+			<td>はい</td>
+			<td>はい</td>
+			<td>カスタム API <sup><a href="#n1"> [3] </a></sup></td>
+			<td>統合ロジックが提供されていません</td>
+		</tr>
+		<tr>
+			<td>Chromecast</td>
+			<td>はい</td>
+			<td>はい</td>
+			<td>ウェブ<sup><a href="#n1"> [2] </a></sup></td>
+			<td><a href="https://player.support.brightcove.com/plugins/beta-chromecast-plugin-brightcove-player.html">ブライトコーブプレーヤーの Chromecast プラグインを通じて提供されるインテグレーション</a></td>
+		</tr>
+		<tr>
+			<td>サムスンスマートテレビ (Tizen)</td>
+			<td>いいえ</td>
+			<td>はい</td>
+			<td>カスタム API <sup><a href="#n1"> [3] </a></sup></td>
+			<td>統合ロジックが提供されていません</td>
+		</tr>
+		<tr>
+			<td>その他のストリーミングプレーヤー</td>
+			<td>いいえ</td>
+			<td>はい</td>
+			<td>カスタム API <sup><a href="#n1"> [3] </a></sup></td>
+			<td>HLS ストリームまたは DASH ストリームを再生できるデバイス</td>
+		</tr>
+	</tbody>
+</table>
+
+<aside class="bcls-aside bcls-aside--tip">
+<p>各プラットフォームでSSAIを実装する方法については、以下のドキュメントを参照してください。</p>
+
+<p id="n1"><sup>[ 1] </sup><a href="https://sdks.support.brightcove.com/features/implementing-server-side-ads-native-player-sdks.html">ネイティブプレイヤー SDK を使用したサーバーサイド広告の実装</a> :モバイルデバイスとコネクテッドテレビを使用したサーバーサイド広告</p>
+
+<p id="n2"><sup>[ 2] </sup><a href="https://player.support.brightcove.com/plugins/implementing-server-side-ads-brightcove-player.html"> Brightcove プレーヤーでのサーバーサイド広告の実装</a> :ウェブ向けブライトコーブプレーヤーを使用したサーバーサイド広告</p>
+
+<p id="n3"><sup>[3]</sup><a href="https://ssai.support.brightcove.com/vod/guides/video-cloud-ssai-ad-config-api.html">SSAI構成</a>および￼ランタイム<a href="https://apis.support.brightcove.com/playback/getting-started/overview-playback-api.html#Video_request_with_SSAI">PIの使用</a>：カスタム API 統合を使用したサーバーサイド広告（ブライトコーブプレーヤーなし）</p>
+</aside>
+</section>
+
+<section class="bcls-section">
+<h2 id="Session_based_targeting">セッションベースのターゲティング</h2>
+
+<p>広告は、さまざまなプラットフォーム、サイト、アプリを対象にすることも、再生時に認識されている他の条件に基づいて、個々のプレイバックセッションが発生したときに評価されます。広告タグを別々の広告再生環境に分割することも、広告マクロで単一の広告タグを使用することもできます。</p>
+
+<p>マクロは広告リクエスト時に評価されるため、動画が再生されるたびに評価されます。また、クライアントから渡された変数や、ビデオのメタデータまたは HTTP リクエストヘッダー情報に基づいて SSAIサービスによって挿入される変数を参照できます。Brightcove SSAI でマクロがどのように機能するかについて詳しくは、<a href="https://ssai.support.brightcove.com/vod/guides/video-cloud-ssai-ad-config-api.html"> SSAI 設定ガイドを参照してください</a>。</p>
+
+<aside class="bcls-aside bcls-aside--information">SSAIは、ウェブ上の広告ブロッカーを避けるのに最適な方法です。Brightcove Player で SSAI を使用したいが、ブロックされていない場合でも、Vペイドクリエイティブなどのクライアント側のテクノロジーを引き続き使用する場合は、<a href="https://ssai.support.brightcove.com/vod/guides/ssai-ad-block-detection-and-auto-failover.html"> Adblock の自動検出とフェイルオーバー機能を有効にしてください</a>。</aside>
+</section>
+
+<section class="bcls-section">
+<h2 id="Viewability">視認性</h2>
+<h3>トランスコード</h3>
+<p>
+広告が視認可能になる前に、まず広告をトランスコードする必要があります。その後、ストリームにステッチすることができます。これは、セッションベースのターゲティングにも適用されます。
+</p>
+<p>
+	たとえば、1 つの広告設定に A と B の 2 つの広告があるとします。
+</p>
+<ul>
+	<li>
+    ユーザー 1 が広告 A を取得します:トランスコーディングが開始されます。ユーザー 1 の広告は利用できません
+	</li>
+	<li>
+    ユーザー 2 は広告 A を取得します (数分後):広告 A のトランスコーディングが完了したので、広告は
+	</li>
+	<li>
+    ユーザー 1 は広告 B を取得します:トランスコーディングが開始されます。ユーザー 1 の広告は利用できません
+	</li>
+	<li>
+    ユーザー 3 は広告 A を取得します:広告 A のトランスコーディングが完了したので、広告は
+	</li>
+	<li>
+    ユーザー 4 は広告 B を取得します。広告 B のトランスコーディングが完了するので、彼らは Ad
+	</li>
+</ul>
+<p>
+	広告はコンテンツに依存しません。これらはレンディションに依存します。したがって、上記の例では、ユーザー 2 が User 1 が視聴したコンテンツと同じレンディションが設定されているコンテンツを視聴している場合、ユーザーは広告 A を取得します。つまり、新しいコンテンツがアップロードされると、通常は広告を再トランスコードする必要はありません。
+</p>
+
+<h3>サードパーティメトリック</h3>
+<p>サードパーティメトリックスと視認性システムは、クライアント側またはサーバー側のビーコンを使用して Brightcove SSAI と連携します。Web 用 Brightcove Player と SDK プレーヤーは、クライアント側のプラグインによって直接レポートできるクライアント側のイベントを発行します。いくつかのベンダーがこのデータを受信するために、視認性と指標プラグインを更新しました。詳細については、アカウントマネージャーにお問い合わせください。</p>
+
+<p><a href="https://player.support.brightcove.com/advertising/ad-events-and-ad-objects.html">一般的なクライアント側広告イベントの詳細をご覧ください。</a></p>
+
+<p>ストリーミング中にさまざまなポイントでサーバーからイベントを発するように SSAI を設定することもできます。</p>
+
+<p><a href="https://ssai.support.brightcove.com/vod/guides/video-cloud-ssai-ad-config-api.html#Configuration_field_details">設定フィールドの詳細ドキュメントの「ビーコンテンプレート」を参照してください。</a></p>
+</section>
+
+<section class="bcls-section">
+<h2 id="Prerequisites">前提条件</h2>
+
+<p>SSAI では、ブライトコーブのダイナミック配信が必要です。つまり、次のことを行う必要があります。</p>
+
+<ol>
+	<li>アカウントマネージャーに連絡して、動的配信と SSAI のアカウントを有効にしてください。</li>
+	<li>動的配信インジェストプロファイルを使用して、1 つまたは複数の新しい動画を取り込むか、古い動画を再トランスコードします。詳細については、「<a href="https://apis.support.brightcove.com/dynamic-ingest/getting-started/overview-dynamic-ingest-api-dynamic-delivery.html#ingestProfile">概要: <span translate="No">Dynamic Ingest API</span>動的配信用</a>」ドキュメントを参照してください。</li>
+</ol>
+</section>
+
+<section class="bcls-section">
+<h2 id="Limitations">制約事項</h2>
+
+<p>SSAI プラグインを使用するときは、次の制限に注意してください。</p>
+
+<ul>
+	<li>SSAI プラグインは、ブライトコーブプレーヤ v6.8.0 以降でのみ互換性があります。v5 のサポートは提供されません。</li>
+	<li>SSAI では、コンテンツのビデオにオーディオが必要ですが、<a href="https://player.support.brightcove.com/general/multiple-audio-tracks.html">複数のオーディオトラックをサポートしていません</a>。</li>
+	<li>Google のシステムで初めて広告が表示された場合は、トランスコードされて配信する準備が整うまで再生されません。</li>
+  <li>
+    SSAI で共有ビデオを再生する場合、SSAI マクロ置換では、子ビデオの代わりに親ビデオのメタデータが使用されます。また、親動画がとしてマークされている場合、子動画にというラベルが付いている場合でも<code translate="No">Advertising='Free'</code>、SSAI <code translate="No">Ad Supported</code>は広告検索をスキップします。
+  </li>
+</ul>
+</section>
+
+<section class="bcls-section">
+<h2 id="Getting_started">入門編</h2>
+
+<p>動的配信用に取り込んだ動画で SSAI の使用を開始するには、次の手順に従います。</p>
+
+<ol class="bcls-tasklist">
+	<li>広告プロバイダーまたは広告運用チームから広告タグを取得します。このタグに関連付けられた広告需要が、Vペイド広告ユニットを返さないように設定されていることを確認してください。</li>
+	<!-- <li>
+               Some customers won’t understand this request or know how to do it. They’ll have to talk with their ad server provider and ask them. This may take a few attempts.
+            </li> -->
+	<li>
+	<p>ウェブブラウザを使用して、アドレスバーに広告タグを貼り付けてリクエストします。置換パラメータがある場合は、偽の値でリクエストを試すか、テストのために変数名をそのままにしておくことができます。</p>
+
+	<ul>
+		<li>エラー応答を受け取った場合は、まず広告タグを確認し、正しいことを確認します。マクロ/変数の偽の値を試す必要があるかもしれません。</li>
+		<li>レスポンスタイプを見てください。各ポッド内の広告の VAST ドキュメントへのリンクが、すべての広告ブレークを示す DFP 広告ルールの応答であることを確認してください。応答は、<code translate="No">VMAP</code> XMLの最初の数行に、<code translate="No">VAST</code>またはと表示されます。DFPの他のXMLは、<strong>おそらく彼らが広告ルールXMLと呼ぶものです</strong>。</li>
+		<li>FreeWheel を使用していない場合は、値をコピーしてブラウザーのアドレスバーに貼り付けることで、手動でリダイレクトを実行できます。<code translate="No">MediaFiles</code>互換性のあるビデオソースを指す要素を探します。MP4 または HLS (.m3u8) ビデオソースファイルを探しています。</li>
+		<li>広告の応答がで終わるファイルを指している場合<code translate="No">.js</code>、そのファイルは VSAI 広告ユニットであり、ブライトコーブ SSAI では機能しません。</li>
+	</ul>
+	</li>
+	<li>広告タグ内のどのパラメーターを SSAI サーバーで置き換えるか、プレーヤーまたはデバイスから渡す必要があるパラメーターを決定します。広告タグを適切に作成してください。広告タグマクロと適切な構文の詳細については、<a href="https://ssai.support.brightcove.com/vod/guides/video-cloud-ssai-ad-config-api.html#Ad_variables"> SSAI 広告設定のドキュメントを参照してください</a>。</li>
+	<li>
+	<p>広告に対するインプレッションビーコンとエンゲージメントビーコンをクライアントプレーヤーから送信するか、サーバーから送信するかを決定します。</p>
+
+	<ul>
+		<li>プレーヤーを Brightcove プレーヤーを使用できないデバイス（ウェブまたは SDK）でのみ使用する場合、または広告ブロックが有効になっているウェブケースをターゲットに設定する場合は、サーバー側のビーコンを使用します。</li>
+		<li>一部のプラットフォームではサーバーからビーコンを送信し、他のプラットフォームではクライアントからビーコンを放出する場合は、複数の SSAI 広告設定を作成する必要があります。<br/>&nbsp;</li>
+	</ul>
+
+	<p>SSAI 広告の設定では、サーバー側のビーコンを有効または無効にできます。Brightcove Player（ウェブまたは SDK）を使用している場合は、クライアントでもこれを設定する必要があります。</p>
+
+	<aside class="bcls-aside bcls-aside--information">ビーコンを2回放さないようにしてください。</aside>
+	</li>
+	<li>広告タグとビーコン設定を使用して、SSAI 広告設定（広告設定）を作成します。詳細については、「<a href="https://studio.support.brightcove.com/admin/configuring-server-side-ad-settings.html">サーバーサイド広告設定の構成</a>」を参照してください。</li>
+	<li>ターゲットとするプラットフォームに関係なく、まずテストとしてウェブプレーヤーを試すことができます。詳細については、「<a href="https://player.support.brightcove.com/plugins/implementing-server-side-ads-brightcove-player.html"> Brightcove Player を使用したサーバーサイド広告の実装</a>」ドキュメントを参照してください。</li>
+	<li>プレーヤーが機能することを確認したら、<a href="#Client_platforms">上記のプラットフォーム表に基づく適切なドキュメントを参照して、他のプラットフォームをターゲットにすることができます</a>。</li>
+</ol>
+</section>
+</article>
+
+<!-- complete bootstrap layout -->
+    </div>
+    <div class="col-sm-2 right-side-bar">
+      
+      <nav class="right-side-nav" id="right_side_nav">
+        <h6 class="toc">ページコンテンツ</h6>
+        <ul id="in_page_nav" class="list-none"></ul>
+      </nav>
+      
+    </div>
+  </div>
+</div>
+
+<hr>
+<div class="last-updated">
+  ページ最終更新日 2020年11月16日
+</div>
+
+
+
+<footer class="bcls-footer" role="contentinfo">
+  <div class="row">
+    <div class="region region-footer-top-center col-md-12">
+      <nav role="navigation" aria-labelledby="block-brightcovesupport-menu" id="block-brightcovesupport" class="footer-menu">
+
+        <h2>ブライトコーブサポート</h2>
+
+        <ul class="menu">
+          <li>
+            <a href="https://status.brightcove.com">システムステータス</a>
+          </li>
+          <li>
+            <a href="https://supportportal.brightcove.com/s/login/?">サポートへのお問い合わせ</a>
+          </li>
+          <li>
+            <a href="https://support.brightcove.com/">ドキュメンテーション</a>
+          </li>
+        </ul>
+
+      </nav>
+      <nav role="navigation" aria-labelledby="block-training-menu" id="block-training" class="footer-menu">
+
+        <h2>トレーニング</h2>
+
+        <ul class="menu">
+          <li>
+            <a href="https://studio.support.brightcove.com/training/online-training-courses.html">オンラインコース</a>
+          </li>
+          <li>
+            <a href="https://studio.support.brightcove.com/training/register-training.html">コースに登録する</a>
+          </li>
+          <li>
+            <a href="https://university.brightcove.com/">Brightcove University</a>
+          </li>
+        </ul>
+
+      </nav>
+      <nav role="navigation" aria-labelledby="block-brightcove-menu" class="footer-menu">
+
+        <h2>Brightcove</h2>
+
+        <ul class="menu">
+          <li>
+            <a href="https://www.brightcove.com">Brightcove.com</a>
+          </li>
+          <li>
+            <a href="https://supportportal.brightcove.com/s/login/?">お問合せ</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="row">
+    <div class="region region-footer-bottom-center col-md-12">
+      <div class="bcls-copyright footer-menu">
+        <table>
+          <tr>
+            <td>
+              <div id="bc_copyright" class="field field--name-field-copyright-year field--type-string field--label-hidden field--item" style="float: left;"> Brightcove Inc. All rights reserved.</div>
+            </td>
+            <td><a href="https://www.brightcove.com/en/legal/privacy">プライバシー</a> | <a href="https://www.brightcove.com/en/terms-and-conditions">利用規約</a></td>
+            <td>
+              <div class="gf-links-cols footer-menu">
+                <div class="gf-social"><a href="https://www.linkedin.com/company/16439" title="LinkedIn" newtab="newtab" class="gf-social-linkedin"><i class="fab fa-linkedin-in" style="font-size: 1.5rem;"></i></a><a href="https://twitter.com/brightcove" title="Twitter" newtab="newtab" class="gf-social-twitter"><i class="fab fa-twitter" style="font-size: 1.5rem;"></i></a><a href="https://www.facebook.com/Brightcove" title="Facebook" newtab="newtab" class="gf-social-facebook"><i class="fab fa-facebook-f" style="font-size: 1.5rem;"></i></a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</footer>
+<div id="talla_wrapper">
+  <p style="text-align: right;position: relative;"><button style="background:rgb(2, 28, 146);color:Snow;padding:.3rem;position:fixed;right:0;bottom:1em;z-index:9999999" onclick="javascript:displayChat()">質問ですか? </button> </p>
+  <div id="talla_chat">
+</div>
+</div>
+<script>
+      
+  var searchBox = sajari.init({
+    mode: "search-box",
+    project: "1588255093746585379", // Set this to your project.
+    collection: "brightcove-documenation", // Set this to your collection.
+    instantPipeline: "autocomplete", // Pipeline used as you type
+    inputPlaceholder: "Search", // Input element placeholder
+    maxSuggestions: 5, // Maximum number of suggestions to show
+    attachSearchBox: document.getElementById("nav-search-box") // DOM element to attach to
+  });
+  
+    searchBox("sub", "pipeline.search-sent", function (_, query) {
+      window.location = "/search.html?q=" + encodeURIComponent(query.q);
+    });
+  
+
+</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/https-fix.js"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/setDate.js"></script>
+  
+  <script src="https://support.brightcove.com/site-assets/js/site/prism.js"></script>
+  
+  <script src="https://support.brightcove.com/site-assets/js/site/site.js"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/tabs.js"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/toc.js"></script>
+  <script src="/assets/js/sites_nav.js"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/bcls-utils.js"></script>
+  <script src="https://support.brightcove.com/site-assets/js/site/local-link-fix.js"></script>
+  <script src="/assets/js/feedback.js"></script>
+  
+  <script src="/assets/js/sajari-search-foot.js"></script>
+  
+  <!-- <script src="/assets/js/sajari-index.js"></script> -->
+  <script src="https://assets.talla.com/latest/embeddedjs/talla.js"></script>
+  <script src="/assets/js/talla-init.js"></script>
+  <style>
+    a.sj-paginator__page-number.sj-paginator__page-number--current.css-so0ov7 {
+      background-color: lightblue;
+    }
+    div.sj-tabs__tab {
+      margin-top: 3rem;
+      margin-left: .3rem;
+      border-top-left-radius: .4rem;
+      border-top-right-radius: .4rem;
+      background-color:#e8e8e8;
+    }
+
+    div.sj-tabs__tab.sj-tabs__tab--selected {
+      border-bottom-color: crimson;
+      background-color: #f8f8f8;
+    }
+
+    p.sj-results__result__description.css-p9jvyt {
+      font-size: 1rem;
+    }
+
+    .sj-result__text.css-31l7gp h3 {
+      color: navy;
+      font-size: 1.4rem;
+    }
+    </style>
+
+</body>
+
+</html>

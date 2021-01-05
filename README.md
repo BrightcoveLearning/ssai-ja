@@ -1,1 +1,1 @@
-# ssai-ja
+# ssai
