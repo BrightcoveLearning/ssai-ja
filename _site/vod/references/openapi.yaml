@@ -391,7 +391,7 @@ components:
           type: string
           description: System id for this configuration
           readOnly: true
-        description:
+        description: 
           type: string
           description: Description of the ad configuration
         discontinuities:
